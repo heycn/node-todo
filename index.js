@@ -46,7 +46,8 @@ function askForAction(list, index) {
   inquirer.prompt({
     type: 'list',
     name: 'action',
-    message: [
+    message: '请选择操作',
+    choices: [
       {name: '退出', value: 'quit'},
       {name: '已完成', value: 'markAsDone'},
       {name: '未完成', value: 'markAsUnDone'},
@@ -80,7 +81,10 @@ function printTasks(list) {
       name: 'index',
       message: '请选择你想操作的任务',
       choices: [{name: '× 退出', value: '-1'}, ...list.map((task, index) => {
-        return {name: `${task.done ? '[√]' : '[_]'} ${index + 1} - ${task.title}`, value: index.toString()}
+        return {
+          name: `${task.done ? '[√]' : '[_]'} ${index + 1} - ${task.title}`,
+          value: index.toString()
+        }
       }), {name: '+ 创建任务', value: '-2'}]
     })
     .then((answer) => {
