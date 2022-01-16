@@ -30,8 +30,8 @@ function updateTitle(list, index) {
     name: 'title',
     message: '新的标题',
     default: list[index].title
-  }).then((answers) => {
-    list[index].title = answers.title
+  }).then((answer) => {
+    list[index].title = answer.title
     db.write(list)
   })
 }
@@ -53,8 +53,8 @@ function askForAction(list, index) {
       {name: '更改标题', value: 'updateTitle'},
       {name: '删除', value: 'remove'}
     ]
-  }).then(answers2 => {
-    const action = actions[answers2.action]
+  }).then(answer2 => {
+    const action = actions[answer2.action]
     action && action(list, index)
   })
 }
@@ -64,9 +64,9 @@ function askForCreateTask(list) {
     type: 'input',
     name: 'title',
     message: '输入任务标题'
-  }).then(answers => {
+  }).then(answer => {
     list.push({
-      title: answers.title,
+      title: answer.title,
       done: false
     })
     db.write(list)
@@ -83,8 +83,8 @@ function printTasks(list) {
         return {name: `${task.done ? '[√]' : '[_]'} ${index + 1} - ${task.title}`, value: index.toString()}
       }), {name: '+ 创建任务', value: '-2'}]
     })
-    .then((answers) => {
-      const index = parseInt(answers.index)
+    .then((answer) => {
+      const index = parseInt(answer.index)
       if (index >= 0) {
         askForAction(list, index)
       } else if (index === -2) {
